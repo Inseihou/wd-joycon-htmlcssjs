@@ -1,17 +1,15 @@
 let Joycon = {
   
-    // event listeners
     listeners: {},
     
-    // controllers
     controller: {},
     
-    // controller utility functions
+
     controllers: {
       
       on: {
         
-        // a, b, x, y, left-shoulder, right-shoulder, left-trigger, right-trigger, select, start, left-joystick, right-joystick, dpad-up, dpad-down, dpad-left, dpad-right, home, share
+       
         press: (key, callback) => {
           
           Joycon.listeners[key] = {
@@ -21,7 +19,7 @@ let Joycon = {
           
         },
         
-        // left-joystick, right-joystick
+       
         move: (key, callback) => {
           
           Joycon.listeners[key + '-move'] = {
@@ -53,25 +51,20 @@ let Joycon = {
         
       },
       
-      // remove the listener for move events
-      // by adding '-move' to the event name, eg.
-      // left-joystick-move
+
       removeListener: (name) => {
         
         delete Joycon.listeners[name];
         
       },
       
-      // intensity:
-      // { preset } or { mildMotorIntensity, strongMotorIntensity }
-      // presets:
-      // 'mild', 'medium', 'strong'
+     
       vibrate: async (intensity, duration) => {
         
-        // if chosen a preset
+    
         if (intensity.preset) {
           
-          // load preset
+         
           const presets = Joycon.controllers.vibrationPresets;
           const preset = presets[intensity.preset];
           
@@ -79,7 +72,7 @@ let Joycon = {
           
         }
         
-        // parse vibration options
+    
         const vibrationOptions = {
           duration: duration,
           strongMagnitude: intensity.strongMotorIntensity,
@@ -87,7 +80,7 @@ let Joycon = {
         };
         
         
-        // vibrate all controllers
+     
         
         const controllers = Object.values(Joycon.controller);
         
@@ -97,14 +90,14 @@ let Joycon = {
           
           if (vibrationMotor) {
             
-            // vibrate
+           
             vibrationMotor.playEffect('dual-rumble', vibrationOptions);
             
           }
           
         });
         
-        // await vibration end
+      
         await new Promise((resolve) => {
           window.setTimeout(resolve, duration);
         });
@@ -152,15 +145,15 @@ let Joycon = {
           
           const buttonListener = Joycon.listeners[buttonName];
           
-          // if button listener exists
+         
           if (buttonListener) {
             
-            // if the button's value changed
+            
             if (button.value !== buttonListener.lastValue) {
               
               buttonListener.lastValue = button.value;
               
-              // call button listener with button value
+             
               buttonListener.callback(button.value);
               
             }
@@ -173,7 +166,7 @@ let Joycon = {
         const axesObj = controller.axes;
         let axes = {};
         
-        // map axes to object
+        
         axesObj.forEach((axisValue, index) => {
           
           const axis = axisMap[index][0];
@@ -184,23 +177,23 @@ let Joycon = {
           
         });
         
-        // run on all axes
+       
         Object.keys(axes).forEach(axisName => {
           
           const axisListener = Joycon.listeners[axisName];
           
-          // if axis listener exists
+          
           if (axisListener) {
             
             const axisObj = axes[axisName];
             
-            // if the axis' value changed
+           
             if (axisObj.x !== axisListener.lastValue.x ||
                 axisObj.y !== axisListener.lastValue.y) {
               
               axisListener.lastValue = axisObj;
               
-              // call axis listener with axis value
+             
               axisListener.callback({
                 x: axisObj.x,
                 y: axisObj.y
@@ -215,11 +208,11 @@ let Joycon = {
       });
       
       
-      // if controllers are connected
+     
       if (Object.keys(Joycon.controller).length
            !== 0) {
         
-        // update
+   
         Joycon.onNextFrame(Joycon.update);
         
       }
@@ -253,10 +246,10 @@ let Joycon = {
         
         const controllerListener = Joycon.listeners['controller-connect'];
         
-        // if controller listener exists
+        
         if (controllerListener) {
           
-          // call controller listener
+          
           controllerListener.callback(e.gamepad);
           
         }
@@ -270,10 +263,9 @@ let Joycon = {
         
         const controllerListener = Joycon.listeners['controller-disconnect'];
         
-        // if controller listener exists
+      
         if (controllerListener) {
-          
-          // call controller listener
+         
           controllerListener.callback(e.gamepad);
           
         }

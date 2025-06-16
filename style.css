@@ -1,41 +1,18 @@
-*
-{
-	box-sizing: border-box;
-}
-body
-{
-	margin: 0px;
-	padding: 0px;
-	font-family: monospace;
-}
-.row
-{
-	display: inline-flex;
-	clear: both;
-}
-.columnLateral
-{
-  float: left;
-  width: 15%;
-  min-width: 300px;
-}
-.columnCetral
-{
-  float: left;
-  width: 70%;
-  min-width: 300px;
-}
-#joy2Div
-{
-	width:200px;
-	height:200px;
-	margin:50px
-}
-#joystick
-{
-	border: 1px solid #FF0000;
-}
-#joystick2
-{
-	border: 1px solid #0000FF;
-}
+
+    body {
+      font-family: system-ui;
+    }
+    
+    .rumble-buttons.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    
+    a {
+      display: block;
+      color: inherit;
+      position: absolute;
+      bottom: calc(0.67em + 8px);
+      text-decoration: none;
+    }
+ 
